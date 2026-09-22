@@ -1,0 +1,10 @@
+# 复制到 ~/.astro/config.yaml（可与其它配置合并）
+hooks:
+  PreGatewayDispatch: 'mkdir -p "$HOME/.astro/logs" && echo "$(date -Iseconds) event=$ASTRO_HOOK_EVENT session=$ASTRO_HOOK_SESSION" >> "$HOME/.astro/logs/chat-audit.log"'
+  CommandNewChat: 'true'
+  # GatewayStartup: '"$HOME/.astro/hooks/telemetry-webhook.sh"'
+
+# 遥测旁路：复制 telemetry-webhook.sh 后，可将上方 PreGatewayDispatch /
+# CommandNewChat 的 command 替换为该脚本，或取消 GatewayStartup 的注释。
+# Session runtime 的 PostToolUse / PreLlmCall / PostLlmCall / AgentEnd 也会统一投递 Shell；
+# 只为实际 fire 的事件配置命令。
